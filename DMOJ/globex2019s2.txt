@@ -1,0 +1,43 @@
+//wrong version!! does NOT WORK!!
+#include <cstdio>
+#include <cmath>
+
+using namespace std; 
+
+double calc(double start, int coef[], int n){
+    double val = 0.00000; 
+    for(int i = 0; i < n+1; i++){
+        double v = start; 
+        for(int j = 0; j < n - i; j++) v = v*start; 
+        if(i!=n) v*=coef[i];
+        else v += coef[i];    
+        val+= v; 
+    }
+    return val; 
+}
+
+int main(){
+    // scuffed input
+    int n, m; 
+    scanf("%d", &n); 
+    int coefone[n+1]; 
+    for(int i = 0; i < n+1; i++) scanf("%d", &coefone[i]); 
+    scanf("%d", &m); 
+    int coeftwo[m+1]; 
+    for(int i = 0; i < m+1; i++) scanf("%d", &coeftwo[i]); 
+    int a, b; 
+    scanf("%d %d", &a, &b); 
+    double start = (double)a, end = (double)b; 
+
+     //process vals, inaccurate :(
+    double d = 0.5;
+    while(start < end){
+        double val = calc(start, coefone, n); 
+        double val2 = calc(start, coeftwo, m);
+        if(abs(val - val2) < 0.00000001) break; 
+        else if(abs(val2 - val) < 1) d-= 0.00000001;
+        else start += d; 
+    }
+    printf("%f", start); 
+    return 0; 
+}
