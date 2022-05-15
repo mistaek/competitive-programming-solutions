@@ -1,0 +1,55 @@
+#include <cstdio>
+#include <queue>
+bool f[1000][1000] = {}; 
+int s = 0; 
+using namespace std; 
+
+void dfs(int i, int j){
+    if(f[i][j] == true) { f[i][j] = false;
+    s+=1; }
+    if(f[i+1][j] == true) dfs(i+1, j); 
+    if(f[i-1][j] == true) dfs(i-1, j); 
+    if(f[i][j+1] == true) dfs(i, j+1); 
+    if(f[i][j-1] == true) dfs(i, j-1);  
+}
+
+int main(){
+    //relocation truncated to fit
+  
+    int flooring = 0; 
+    int rooms = 0;
+    // input
+    scanf("%d", &flooring);
+     
+    int width, height; scanf("%d %d", &width, &height); 
+
+
+    for(int i = 1; i <= width; i++){
+        for(int j = 1; j <= height; j++){
+            char in; 
+            scanf(" %c", &in); 
+            if(in == 'I') f[i][j] = false; 
+            else f[i][j] = true;        
+        }
+    }
+    priority_queue<int> sizes; 
+    //processing sizes with dfs
+    for(int i = 1; i <= width; i++){
+        for(int j = 1; j <= height; j++){
+            if(!f[i][j]) continue; 
+            else{ s = 0; dfs(i, j); sizes.push(s); }
+        } 
+    }
+
+    //some calc error somewhere
+    while(!sizes.empty()){
+        if(flooring < sizes.top()) break;
+        flooring = flooring - sizes.top();
+        rooms++; 
+        sizes.pop(); 
+    }
+    
+    if(rooms == 1) printf("%d room, %d square metre(s) left over", rooms, flooring);
+    else printf("%d rooms, %d square metre(s) left over", rooms, flooring);
+    return 0; 
+}
