@@ -1,0 +1,43 @@
+#include <cstdio>
+#include <bitset>
+//missing some edge case
+using namespace std; 
+
+int main(){
+	bitset<2000011> seconds; 
+	int n, m, start, end, repeat; 
+	while(scanf("%d %d", &n, &m), m || n){
+		bool contra = false;
+		while(n--){
+			scanf("%d %d", &start, &end); 
+			start++;
+			while(start <= end && !contra){
+				if(!seconds.test(start)) seconds[start] = 1; 
+				else{ 
+					contra = true;
+					break;
+				} 
+				start++;
+			}
+		}
+		while(m--){
+			scanf("%d %d %d", &start, &end, &repeat);
+			start++;
+			while(start <= end && !contra){
+				int jumper = start;
+				while(jumper <=1000000){
+					if(!seconds[jumper]) seconds[jumper] = 1; 
+					else{ 
+						contra = true;
+						break;
+					} 
+					jumper+= repeat;
+				}
+				start++;
+			}
+		}
+		if(contra) printf("CONFLICT\n"); 
+		else printf("NO CONFLICT\n"); 
+		seconds.reset(); 
+	}
+}

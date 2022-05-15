@@ -1,0 +1,25 @@
+#include<iostream>
+#include<string>
+#include <cstdio>
+
+using namespace std;
+
+int main(){
+	char input;
+	bool open = false;
+	while(scanf("%c", &input) != EOF){
+		
+		if(input == '"' && open ==true){
+			printf("''");
+			open = false;
+		}
+		else if(input == '"' && open == false){
+			printf("``");
+			open = true;
+		}
+		else{
+			printf("%c", input);
+		}
+	}
+	return 0;
+}

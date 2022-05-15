@@ -1,0 +1,17 @@
+/* UVa 514 - Final Attempt */
+
+#include <cstdio>
+#include <stack>
+
+using namespace std;
+
+int main(){
+    int n, order[1000]; 
+    while(scanf("%d", &n), n){
+        while(scanf("%d", &order[0]), order[0]){
+            
+        } 
+        printf("\n"); 
+    }
+    return 0;
+}

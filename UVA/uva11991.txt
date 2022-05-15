@@ -1,0 +1,33 @@
+//uva 11991
+
+//status: AC, .08s runtime
+
+// valuepaw 369 
+
+
+#include <cstdio>
+#include <vector>
+
+using namespace std; 
+
+
+int main(){
+    int n, m;
+
+    while(scanf("%d %d", &n, &m) != EOF){
+        vector<int> freq[1000001]; 
+        int count[1000001] = {}; 
+        for(int i = 1; i <= n; i++){
+            int b; 
+            scanf("%d", &b); 
+            count[b]++; 
+            freq[b].push_back(i); 
+        }
+        while(m--){
+            int num, app; scanf("%d %d", &app, &num); 
+            if(app > count[num]) printf("0\n"); 
+            else printf("%d\n", freq[num][app-1]);
+        }
+    }
+    return 0; 
+}

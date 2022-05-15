@@ -1,0 +1,15 @@
+#include <iostream>
+#include <string>
+#include <algorithm>
+
+using namespace std; 
+int main(){
+	string input; 
+	while(getline(cin, input), input[0] != '#'){
+		string start = input; 
+		sort(start.begin(), start.end()); 
+		next_permutation(input.begin(), input.end()); 
+		if(input == start) cout << "No Successor\n"; 
+		else cout << input << "\n"; 
+	}
+}

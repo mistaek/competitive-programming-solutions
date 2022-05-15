@@ -1,0 +1,12 @@
+#include<cstdio>
+#include <iostream>
+
+using namespace std;
+
+int main(){
+	char input; 
+	while(scanf("%c", &input)!= EOF){
+		printf("%c", input); 
+	} 
+	return 0;
+}

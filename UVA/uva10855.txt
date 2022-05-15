@@ -1,0 +1,38 @@
+/* UVa 10855 WIP */ 
+
+#include <cstdio>
+
+using namespace std;
+int find(char arr[][], char arr2[][], int a, int b){
+
+}
+void rotate(char arr[][], int n){
+	char rotated[n][n]
+	for(int i = 0; i < n; i++){
+		for(int j = 0; j < n; j++){
+			rotated[j][n-1-i] = arr[i][j]
+		}
+	} 
+	for(int i = 0; i <n i++)
+		for(int j = 0; j <n; j++) arr[i][j] = rotated[i][j]; 
+}
+int main(){
+	int a, b; 
+	while(scanf("%d %d", &a, &b), a){
+		char sqr1[a][a]; 
+		char sqr2[b][b];
+		for(int i = 0; i < a; i++){
+			for(int j = 0; j<a; j++){
+				scanf(" %c", &sqr1[i][j]); 
+			}
+		}
+		for(int i = 0; i<  b; i++){
+			for(int j = 0; j<b; j++){
+				scanf(" %c", &sqr2[i][j]); 
+			}
+		}
+		
+		printf("%d %d %d %d\n", scores[0], scores[1], scores[2], scores[3]);  
+	}	
+	return 0; 
+}
