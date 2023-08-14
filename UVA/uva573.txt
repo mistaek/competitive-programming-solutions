@@ -1,0 +1,32 @@
+#include <iostream>
+#include <cstdio>
+
+using namespace std;
+
+int main(){
+	int iheight,slide, day; 
+	double climbh, fatiguep, height, slider;
+	while(scanf("%d %lf %d %lf", &iheight, &climbh, &slide, &fatiguep), iheight != 0){
+		height = 0;
+		day = 0;
+		fatiguep /= 100; 
+		slider = climbh *fatiguep;
+		while(height < iheight && height >=0){
+			day++;
+			if(climbh >0){
+				height+=climbh; 
+				climbh -= slider; 
+			}
+			if(height > iheight){
+				printf("success on day %d\n", day);
+				break;
+			}
+			height -= slide; 
+			if(height < 0){
+				printf("failure on day %d\n", day); 
+			}
+			
+		}
+	} 
+	return 0;
+}

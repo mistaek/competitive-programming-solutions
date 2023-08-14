@@ -1,0 +1,96 @@
+#include <cstdio>
+#include <string>
+#include <iostream>
+#include <vector>
+#include <queue>
+#include <map>
+
+using namespace std;
+//currently has memleak or something
+
+int main(){
+	// input
+	int numLinks; 
+	map<string, int> converter; 
+	vector<string> alist[100]; 
+	vector<string> links; 
+	vector<string> extraLinks; 
+	cin >> numLinks;
+	cin.ignore();
+	string input;
+	for(int i = 0; i < numLinks; i++){
+		getline(cin, input); 
+		links.push_back(input); 
+		converter.insert(pair<string, int>(input, i)); 
+		while(getline(cin, input), input!= "</HTML>"){
+			int length = input.length();
+			bool linkpresent = false;
+			int k = input.find("F=");
+			while(k!= string::npos){
+				string stemp;	 
+				while(++k){
+					if(input[k] == '"')
+						break;
+				}
+				while(k++){
+					if(input[k] == '"')
+						break;
+					stemp.push_back(input[k]);
+				}
+				alist[i].push_back(stemp); 
+				cout << "Link from " << links[i] << " to " << stemp << "\n";
+				extraLinks.push_back(stemp); 
+				k = input.find("<A", k+1);
+			}
+		}
+		if(i == numLinks-1){
+			int extraindex = numLinks; 
+			for(auto runner = extraLinks.begin(); runner != extraLinks.end(); runner++){
+				bool isithere = false;
+				for(auto runner2 = links.begin(); runner2!= links.end(); runner2++){
+					if(*runner == *runner2){
+						isithere = true; 
+						break;
+					}
+				}
+				if(!isithere){
+					links.push_back(*runner);
+					converter.insert(pair<string, int>(*runner, extraindex)); 
+					extraindex++;
+				}
+			}
+		}
+	}
+	//bfs: bugged
+	string bfsin, bfsin2; 
+	while(cin >> bfsin >> bfsin2, bfsin != "The"){
+		vector<bool> v(numLinks);
+		queue<string> q;
+		int j = converter[bfsin];
+		v[j] = true;
+		q.push(links[j]); 
+		while(!q.empty()){
+			j = converter[q.front()];
+			q.pop(); 
+			for(auto p = alist[j].begin(); p< alist[j].end(); p++){
+				if(!v[converter[*p]]){
+					q.push(*p);
+					v[converter[*p]] = true;
+				}
+				
+			}
+		}
+		int didwegothere = converter[bfsin2];
+		if(v[didwegothere] == true){
+			cout << "Can surf from " << bfsin << " to " << bfsin2 << ".\n";
+		}
+		else{
+			cout << "Can't surf from " << bfsin << " to " << bfsin2 << ".\n";
+		}
+	} 
+
+	return 0; 
+}
+
+
+

@@ -1,0 +1,27 @@
+/* UVa 10038 Jolly Jumper */ 
+
+#include <cstdio>
+#include <cmath>
+
+int main(){
+	int n; 
+	while(scanf("%d", &n) != EOF){
+		bool absv[n] = {true}, ans = true;  
+		int a, preva = 0; 
+		for(int i =0; i < n; i++){
+			scanf("%d", &a);
+			if(i != 0 && abs(preva - a) < n)
+				absv[abs(preva - a)] = true; 
+			preva = a;   
+		}
+		for(int j = 0; j<n; j++){
+			if(!absv[j])
+				ans = false;
+		}
+		if(ans)
+			printf("Jolly\n");
+		else
+			printf("Not jolly\n"); 
+	}
+	return 0; 
+}

@@ -1,0 +1,76 @@
+/* UVa 11507 
+Don't get it after 1 hr, gonna look up solution
+
+Am fairly close tho, retry once I am gooder.
+
+*/
+
+#include <cstdio>
+#include <iostream>
+#include <string>
+
+using namespace std; 
+
+int main(){
+	int l; 
+	string input; 
+	while(scanf("%d", &l), l >0){
+		l -=1; 
+		char first = 'a'; 
+		int y=0, z=0; 
+		bool x = true, resetafter = false; 
+		while(l--){
+			cin >> input; 
+			if(first == 'a' && input[1] != 'o'){
+				first = input[1]; 
+			}
+			else if(first == input[1]){
+				resetafter = true;
+			}
+			if(input[1] == 'z' && first == 'z'){
+				if(input[0] == '+'){
+					z++;
+				}
+				else{
+					z--;
+				}
+			}
+			else if(input[1] == 'y' && first == 'y'){
+				if(input[0] == '+'){
+					y++;
+				}
+				else{
+					y--;
+				}
+			}
+			if(z <-1 || z>1){
+				z = 0;
+				x = !x; 
+			}
+			if(y < -1 || y >1){
+				y = 0;
+				x = !x; 
+			}
+			if(resetafter){
+				resetafter = !resetafter; 
+				first = 'a'; 
+			}
+		}
+		if(y!=0 && z == 0){
+			y == 1 ? printf("+y\n") : printf("-y\n"); 
+		}
+		else if(z != 0  && y ==0){
+			z == 1 ? printf("+z\n") : printf("-z\n"); 
+		}
+		else if(z !=0 && y!= 0){
+			if(first == 'y')
+				y == 1 ? printf("+y\n") : printf("-y\n");
+			else
+				z == 1 ? printf("+z\n") : printf("-z\n"); 
+		}
+		else if(z == 0 && y ==0){
+			x ? printf("+x\n") : printf("-x\n"); 
+		}
+	}
+	return 0; 
+}

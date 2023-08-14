@@ -1,0 +1,64 @@
+//valuepaw 3 6 9 
+// triple c two thousand senor two
+
+//slow solution should work, not many streams
+#include <cstdio>
+#include <vector>
+
+//ok rounding too early, convert everything to doubles T_T
+using namespace std; 
+
+int round(double p){
+    int pe = (int)p; 
+    if(p - (double)pe >= 0.5) return pe+1; 
+    else return pe; 
+
+}
+int main(){
+    //input
+    int n; scanf("%d", &n); 
+    vector<double> flows; 
+    for(int i = 0; i < n; i++){int f; scanf("%d", &f); double flow = (double)f; flows.push_back(flow); } 
+
+    // joins and breaks
+    int id; 
+    while(scanf("%d", &id), id != 77){
+    //union
+    if(id == 88){
+        int stream; scanf("%d", &stream); 
+        double nflow = flows[stream-1] + flows[stream]; 
+        n--; 
+        vector<double> temp; 
+        for(int i = 0; i < n; i++){
+            if(i == stream - 1) temp.push_back(nflow);
+            //missed this!!! *********************************************
+            else if(i > stream-1) temp.push_back(flows[i+1]); 
+            //think about logistics more! DO NOT BE LAZY
+            else temp.push_back(flows[i]); 
+        }
+        flows.clear();
+        for(int i = 0; i < n; i++) flows.push_back(temp[i]);  
+    }
+
+    else if(id == 99){
+        int stream, p; scanf("%d %d", &stream, &p); 
+        double percent = (double) p/100.0;  
+        double nflow1 = percent * flows[stream-1]; 
+        double nflow2 = flows[stream-1] - nflow1; 
+        n++; 
+        vector<double> temp; 
+        for(int i = 0; i < n; i++){
+            if(i == stream - 1){ temp.push_back(nflow1); temp.push_back(nflow2);} 
+            else temp.push_back(flows[i]); 
+        }
+        flows.clear();
+        for(int i = 0; i < n; i++) flows.push_back(temp[i]);  
+    }
+
+    }
+    //output hopefully correctly rounded
+    for(auto p = flows.begin(); p!= flows.end(); p++){
+        (p == flows.begin())? printf("%d", round(*p)) : printf(" %d", round(*p)); 
+    }
+    return 0; 
+}

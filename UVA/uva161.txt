@@ -1,0 +1,60 @@
+/* UVa 161 -- input is currently not working*/ 
+
+#include <iostream>
+#include <cstdio>
+
+using namespace std;
+
+int main(){
+	while(cin){
+		int longest = 0, cycles[101], seconds; 
+		int index = 0; 
+		bool allisgreen = false; 
+		while(cin >> cycles[index], cycles[index]!=0){
+			if(cycles[index] > longest)
+				longest = cycles[index]; 
+			index++;
+		}
+		seconds = 2*longest;
+		while(!allisgreen && seconds <= 18000 ){
+			for(int i = 0; i <= index; i++){
+				// test here 
+				if((seconds/cycles[i]) %2 == 1){
+					allisgreen = false;
+				}
+				else if(seconds -((seconds/cycles[i])*cycles[i]) > cycles[i] -5){
+					allisgreen = false;
+				}
+				else{
+					allisgreen = true;
+				}
+				if(allisgreen == false){
+					break;	
+				}
+			}
+			seconds++;
+		}
+		else if(seconds > 18000 ){
+			cout << "Signals fail to synchronise in 5 hours\n";
+		}
+		else{
+			if(seconds/3600 == 0)
+				cout << "00:"; 
+			else
+				cout << "0" << seconds/3600 << ":"; 
+			seconds-= (seconds/3600) * 3600; 
+			if((seconds/60) < 10){
+				cout << "0" << seconds/60 << ":"; 
+			}
+			else{
+				cout << seconds/60 << ":"; 
+			}
+			seconds -= (seconds/60) * 60; 
+			if(seconds <10)
+				cout << "0" << seconds << ":\n"; 
+			else
+				cout << seconds << endl;
+		}
+	}
+	return 0; 
+}

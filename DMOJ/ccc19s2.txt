@@ -1,0 +1,32 @@
+/* CCC19S2 */
+#include <cstdio>
+#include <vector>
+
+using namespace std; 
+int main(){
+	bool sieve[2000002] = {true, true, false};
+	vector<int> primes; 
+	for(int i = 2; i < 2000001; i++){
+		if(!sieve[i]){
+			primes.push_back(i); 
+			for(int j = i+i; j < 2000001; j+=i) sieve[j] = true; 
+		}
+	}
+	int a; 
+	scanf(" %d", &a); 
+	while(a--){
+		int n; 
+		scanf(" %d", &n);  
+		for(auto p = primes.begin(); p!=primes.end(); p++){
+			int b = *p;
+			int i = (2*n) - b;
+			if(i < 2000001){
+				if(!sieve[i]){
+					printf("%d %d\n", b, i); 
+					break;
+				}
+			}	
+		} 
+	}
+	return 0; 
+}

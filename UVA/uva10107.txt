@@ -1,0 +1,18 @@
+#include <cstdio>
+#include <vector>
+#include <algorithm>
+#include <iostream>
+
+using namespace std;
+
+int main(){
+	vector<long long> nums;
+	long long input;
+	while(scanf(" %d", &input) != EOF){
+		nums.push_back(input); 
+		sort(nums.begin(), nums.end());
+		if(nums.size() == 1) printf("%d\n", nums[0]); 
+		else if(nums.size()%2 == 0) printf("%d\n", (nums[(nums.size()/2)-1]+ nums[(nums.size()/2)])/2); 
+		else printf("%d\n", nums[nums.size()/2]); 
+	}
+}

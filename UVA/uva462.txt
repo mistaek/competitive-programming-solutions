@@ -1,0 +1,95 @@
+/*UVa 462 attempt - not working rn, fix tomorrow/latre */
+
+#include <iostream>
+#include <cstdio>
+#include <cmath>
+//S H D C 0 1 2 3 
+using namespace std; 
+void evaluate(int arr[]); 
+int main(){
+	while(cin){
+		char temp1, temp2; 
+		int points=0, counter=0, cards[4], cursuit; 
+		bool hasK[4], hasQ[4], hasJ[4], stopped[4];  
+		for(int i = 0; i < 13; i++){
+			counter++;
+			cin >> temp1 >> temp2; 
+			if(temp2 == 'S')
+				cursuit = 0; 
+			else if(temp2 == 'H')
+				cursuit = 1; 
+			else if(temp2 == 'D')
+				cursuit = 2; 
+			else if(temp2 == 'C')
+				cursuit =3; 
+			if(temp1 == 'A'){
+				points +=4;
+				stopped[cursuit] == true;
+			} 
+			else if(temp1 == 'K'){
+				points +=3;
+				hasK[cursuit] = true;
+			}
+			else if(temp1 == 'Q'){
+				points +=2;	
+				hasQ[cursuit] =true;
+			}
+			else if(temp1 == 'J'){
+				points++;
+				hasJ[cursuit] = true; 
+			}
+			cards[cursuit]++;
+			if(counter == 13){ 
+				int looper2 = 4; 
+				while(looper2--){
+					if((hasK[looper2] && cards[looper2] >1) || (hasQ[looper2] && cards[looper2] >2)){
+							stopped[looper2] =true; 	
+					}
+					if(hasK[looper2] && cards[looper2] <2)
+							points--;
+					if(hasQ[looper2] && cards[looper2] <3)
+							points--;
+					if(hasJ[looper2] && cards[looper2] <4)
+							points--; 
+				}
+				if(points >= 16 && stopped[0] && stopped[1] && stopped[2] && stopped[3]){
+					cout << "BID NO-TRUMP\n"; 
+				}	
+				else{
+					looper2 = 4; 
+					while(looper2--){
+						if(cards[looper2] == 2)
+							points++;
+						else if(cards[looper2] == 1 || cards[looper2] == 0)
+							points+=2;
+					}
+					if(points < 14)
+						cout << "PASS"; 
+					else{
+						evaluate(cards); 
+					}
+				}
+			}
+		}	
+	}
+
+	return 0; 
+}
+
+void evaluate(int arr[]){
+	int best = 0; 
+	for(int i = 1; i <4; i++){
+		if(arr[i] > arr[best]){
+			best = i; 
+		}
+	}
+	if(best = 0)
+		printf("BID S\n");
+	else if(best = 1)
+		printf("BID H\n"); 
+	else if(best = 2)
+		printf("BID D\n");
+	else
+		printf("BID C\n");
+}
+

@@ -1,0 +1,37 @@
+/* UVa 10141 - NOT WORKING, redo later, work on declaring variables in smallest scope possible*/
+
+#include <iostream>
+#include <cstdio>
+#include <string>
+using namespace std; 
+
+int main(){
+	int numReqs, numRFPs, reqsMet, prevR=-1, clonenumRFPs, rfp = 1;
+	double price, prevP; 
+	string title, best, waste;  
+	while(scanf("%d %d", &numReqs, &numRFPs), numReqs != 0 || numRFPs !=0){
+		while(numReqs--){
+			getline(cin, waste); 
+		}
+		clonenumRFPs = numRFPs -1;
+		while(numRFPs--){				
+			getline(cin, title); 
+			scanf("%lf %d", &price, &reqsMet); 
+			if(reqsMet > prevR){
+				prevR = reqsMet;
+				prevP = price; 
+				best = title;; 
+			}
+			else if(reqsMet == prevR && price < prevP){
+				prevP = price; 
+				best = title; 
+			}
+			while(reqsMet--){
+				getline(cin, waste);
+			}
+		}
+		printf("\nRFP #%d\n%s",rfp, best); 
+		rfp++; 
+	}
+	return 0; 
+}
