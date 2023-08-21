@@ -1,7 +1,7 @@
 tCXX = g++
 CXXFLAGS = -std=c++14 -Wall -g
 EXEC = a
-MAINOBJ = 1852A.cpp
+MAINOBJ = 1858B.cpp
 OBJECTS = ${MAINOBJ}
 
 
