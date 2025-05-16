@@ -1,37 +1,35 @@
-/*
-1618D
-u are dumb lol
-*/
-
-#include <cstdio>
-#include <algorithm>
-
-using namespace std; 
-int main(){
-    int t; scanf("%d", &t); 
-    while(t--){
-        int n, k; scanf("%d %d", &n, &k);
-        int a[n], f[n-1], psa[n]; 
-        for(int i = 0; i < n; i++){ 
-            scanf("%d", &a[i]);  
-        }
-        sort(a, a+n); 
-        for(int i = 0; i < n; i++){ 
-            psa[i] = a[i]; 
-            if(i){
-                psa[i] += psa[i-1];
-                f[i-1] = a[i-1]/a[i];
+    /*
+    1618D
+    */
+     
+    #include <iostream>
+    #include <algorithm>
+    #include <vector>
+     
+    using namespace std; 
+     
+    int main(){
+        ios_base::sync_with_stdio(false); 
+        cin.tie(0); 
+     
+        int t; cin>>t; 
+        while(t--){
+            int n, k; cin >> n >> k; 
+            int ans = 0; 
+            vector<int> a(n); 
+            for(int i = 0; i <n ;i++){
+                cin >> a[i];
             }
+            sort(a.begin(), a.end()); 
+     
+            for(int i = 0; i < n-(2*k); i++){
+                ans += a[i];
+            }
+            for(int i = n - (2*k); i < n-k; i++){
+                ans += a[i]/a[i+k];
+            }
+            cout << ans << "\n"; 
+     
         }
-        int ind = n-2, ans = 0;  
-        while(k){
-            ans += f[ind];
-            ind -=2; 
-            k--;
-        }
-        //printf("%d %d\n", ans, ind);
-        if(ind+1 >= 0) {ans += psa[ind+1];}
-        printf("%d\n", ans);
+        return 0;   
     }
-    return 0;
-}

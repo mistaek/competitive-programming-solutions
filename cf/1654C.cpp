@@ -1,53 +1,52 @@
-/*
-1654C
-WIP
-*/
-
-#include <cstdio>
-#include <map>
-
-using namespace std; 
-
-map<long long, int> allowed; 
-
-int main(){
-    int t; scanf("%d", &t); 
-    while(t--){
-        allowed.clear();
-        int n; scanf("%d", &n); 
-        long long arr[n], sum = 0;
-        for(int i = 0; i < n; i++){
-            scanf("%lld", &arr[i]); 
-            sum+= arr[i];
-        }
-
-        allowed[sum] = 1;
-        long long pow = 2;
-        while(true){
-            if((sum % pow)){
-                if(allowed.count((sum/pow)) == 0) allowed[(sum/pow)] = 0;
-                if(allowed.count((sum/pow) + 1) == 0) allowed[(sum/pow) + 1] = 0;
-                allowed[(sum/pow) +1] += allowed[(sum/(pow/2))];
-                allowed[(sum/pow)] += allowed[(sum/(pow/2))];
+    /*
+    1654C
+    */
+     
+    #include <iostream>
+    #include <map>
+    #include <vector>
+    #include <stack>
+    #include <queue>
+    using namespace std; 
+     
+    int main(){
+        ios_base::sync_with_stdio(false);
+        cin.tie(0);
+        int t; cin>>t; 
+         
+        
+        while(t--){
+            int n; cin >> n;
+            map<long long, int> occ; 
+            
+            
+            long long sum = 0; 
+            for(int i = 0; i < n; i++){
+                long long in; cin >> in; 
+                sum += in; 
+                if(occ.count(in) == 0) occ[in] = 1; 
+                else occ[in]++; 
             }
-            else{
-                if(allowed.count((sum/pow)) == 0) allowed[(sum/pow)] = 0;
-                allowed[(sum/pow)] += allowed[(sum/(pow/2))];
+     
+            bool ans = 1; 
+            stack<long long> q; 
+            q.push(sum); 
+            //memory issue
+            while(!q.empty()){
+                long long req = q.top(); q.pop(); 
+                if(req == 0){
+                    ans = 0;
+                    break;
+                }
+                //potential time issue here?
+                if(occ.count(req) && occ[req] > 0) occ[req]--; 
+                else{
+                    q.push((req/2) + (req % 2)); q.push(req/2); 
+                }
             }
-            if(sum/pow == 0) break;
-            pow*=2; 
-
+     
+            if(ans) cout << "Yes" << endl; 
+            else cout << "No" << endl; 
         }
-        bool ans = true; 
-        for(int i =0 ; i < n; i++){
-            if(allowed.count(arr[i]) == 0) ans = false; 
-            else{
-                allowed[arr[i]--];
-                if(allowed[arr[i]] < 0) ans = false;
-            }
-        }
-        if(ans) printf("YES\n"); 
-        else printf("NO\n");
+        return 0;
     }
-    return 0;
-}
