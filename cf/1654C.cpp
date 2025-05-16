@@ -1,53 +1,53 @@
 /*
 1654C
-AC - stack is better!!
+WIP
 */
 
-#include <iostream>
+#include <cstdio>
 #include <map>
-#include <vector>
-#include <stack>
-#include <queue>
+
 using namespace std; 
 
+map<long long, int> allowed; 
+
 int main(){
-    ios_base::sync_with_stdio(false);
-    cin.tie(0);
-    int t; cin>>t; 
-     
-    
+    int t; scanf("%d", &t); 
     while(t--){
-        int n; cin >> n;
-        map<long long, int> occ; 
-        
-        
-        long long sum = 0; 
+        allowed.clear();
+        int n; scanf("%d", &n); 
+        long long arr[n], sum = 0;
         for(int i = 0; i < n; i++){
-            long long in; cin >> in; 
-            sum += in; 
-            if(occ.count(in) == 0) occ[in] = 1; 
-            else occ[in]++; 
+            scanf("%lld", &arr[i]); 
+            sum+= arr[i];
         }
 
-        bool ans = 1; 
-        stack<long long> q; 
-        q.push(sum); 
-        //memory issue
-        while(!q.empty()){
-            long long req = q.top(); q.pop(); 
-            if(req == 0){
-                ans = 0;
-                break;
+        allowed[sum] = 1;
+        long long pow = 2;
+        while(true){
+            if((sum % pow)){
+                if(allowed.count((sum/pow)) == 0) allowed[(sum/pow)] = 0;
+                if(allowed.count((sum/pow) + 1) == 0) allowed[(sum/pow) + 1] = 0;
+                allowed[(sum/pow) +1] += allowed[(sum/(pow/2))];
+                allowed[(sum/pow)] += allowed[(sum/(pow/2))];
             }
-            //potential time issue here?
-            if(occ.count(req) && occ[req] > 0) occ[req]--; 
             else{
-                q.push((req/2) + (req % 2)); q.push(req/2); 
+                if(allowed.count((sum/pow)) == 0) allowed[(sum/pow)] = 0;
+                allowed[(sum/pow)] += allowed[(sum/(pow/2))];
+            }
+            if(sum/pow == 0) break;
+            pow*=2; 
+
+        }
+        bool ans = true; 
+        for(int i =0 ; i < n; i++){
+            if(allowed.count(arr[i]) == 0) ans = false; 
+            else{
+                allowed[arr[i]--];
+                if(allowed[arr[i]] < 0) ans = false;
             }
         }
-
-        if(ans) cout << "Yes" << endl; 
-        else cout << "No" << endl; 
+        if(ans) printf("YES\n"); 
+        else printf("NO\n");
     }
     return 0;
 }
