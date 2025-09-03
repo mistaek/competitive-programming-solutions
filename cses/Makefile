@@ -1,5 +1,5 @@
 tCXX = g++
-CXXFLAGS = -std=c++17 -Wall -g
+CXXFLAGS = -std=c++23 -Wall -g
 EXEC = a
 MAINOBJ = ${NAME}
 OBJECTS = ${MAINOBJ}
